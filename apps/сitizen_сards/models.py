@@ -1,4 +1,3 @@
-import hashlib
 from django.db import models
 from django.core.exceptions import ValidationError
 from citizens.models import Citizen  # Импортируем модель Citizen из приложения citizens
@@ -15,17 +14,10 @@ class CitizenCard(models.Model):
     active = models.BooleanField(default=False)  # Если True, карта активна
 
     # Дата активации карты (может быть пустой, если карта не активна)
-    activated_at = models.DateTimeField(null=True, blank=True)
+    activated_at = models.DateTimeField(null=True, blank=True, auto_now_add=True)
 
     # Дата деактивации карты (если карта больше не активна)
-    deactivated_at = models.DateTimeField(null=True, blank=True)
-
-    def set_hash_pan(self, pan):
-        """
-        Устанавливает значение hash_pan на основе предоставленного PAN.
-        Хэшируется PAN карты с помощью алгоритма SHA-256 для хранения в базе данных.
-        """
-        self.hash_pan = hashlib.sha256(pan.encode('utf-8')).hexdigest()  # Хэшируем PAN карты
+    deactivated_at = models.DateTimeField(null=True, blank=True, auto_now=True)
 
     def clean(self):
         """

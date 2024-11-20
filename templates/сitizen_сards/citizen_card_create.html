@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+    Create Citizen Card
+{% endblock %}
+
+{% block content %}
+    <h1>Create New Citizen Card</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="citizen">Citizen</label>
+            <select name="citizen" id="citizen" class="form-control">
+                {% for citizen in citizens %}
+                    <option value="{{ citizen.id }}">{{ citizen.first_name }} {{ citizen.last_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="hash_pan">Hash PAN</label>
+            <input type="text" id="hash_pan" name="hash_pan" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="active">Active</label>
+            <input type="checkbox" id="active" name="active" class="form-check-input">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Create Card</button>
+    </form>
+{% endblock %}

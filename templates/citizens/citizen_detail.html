@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Citizen Details{% endblock %}
+
+{% block content %}
+<h1>Details for {{ citizen.last_name }} {{ citizen.first_name }} {{ citizen.middle_name }}</h1>
+<p><strong>Created at:</strong> {{ citizen.created_at }}</p>
+<a href="{% url 'citizens:edit' citizen.id %}" class="btn btn-primary">Edit</a>
+<h2>Bank Cards</h2>
+{% if cards %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Card ID</th>
+                <th>Hash PAN</th>
+                <th>Status</th>
+                <th>Activated At</th>
+                <th>Deactivated At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for card in cards %}
+            <tr>
+                <td>{{ card.id }}</td>
+                <td>{{ card.hash_pan }}</td>
+                <td>{{ card.active|yesno:"Active,Inactive" }}</td>
+                <td>{{ card.activated_at|date:"Y-m-d H:i" }}</td>
+                <td>{{ card.deactivated_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No bank cards found for this citizen.</p>
+{% endif %}
+{% endblock %}

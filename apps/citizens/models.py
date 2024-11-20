@@ -8,12 +8,9 @@ class Citizen(models.Model):
 
     # Поле для фамилии гражданина, ограниченное 100 символами
     last_name = models.CharField(max_length=100)
-
-    # Поле для даты рождения гражданина
-    birth_date = models.DateField()
-
-    # Уникальное поле для идентификации гражданина (например, номер паспорта)
-    citizen_id = models.CharField(max_length=50, unique=True)
+    
+    # Поле для фамилии гражданина, ограниченное 100 символами
+    middle_name = models.CharField(max_length=100, blank=True, default='Unknown')
 
     # Поле, автоматически устанавливающее дату и время создания записи
     created_at = models.DateTimeField(auto_now_add=True)

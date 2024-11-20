@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Citizen{% else %}Add New Citizen{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1>
+    {% if form.instance.pk %}Edit Citizen{% else %}Add New Citizen{% endif %}
+</h1>
+
+<!-- Форма для гражданина -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">
+        {% if form.instance.pk %}Save Changes{% else %}Add Citizen{% endif %}
+    </button>
+    <a href="{% url 'citizens:list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% endblock %}

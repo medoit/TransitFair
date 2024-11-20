@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Citizens List
+{% endblock %}
+
+{% block content %}
+<h1>List of Citizens</h1>
+<a href="{% url 'citizens:create' %}" class="btn btn-primary">Add New Citizen</a>
+
+<!-- Таблица для отображения граждан -->
+<table id="citizenTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Middle Name</th>
+            <th>Created at</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for citizen in citizens %}
+        <tr>
+            <td>{{ citizen.id }}</td>
+            <td>{{ citizen.last_name }}</td>
+            <td>{{ citizen.first_name }}</td>
+            <td>{{ citizen.middle_name }}</td>
+            <td>{{ citizen.created_at }}</td>
+            <td>
+                <a href="{% url 'citizens:detail' citizen.id %}" class="btn btn-info btn-sm">View</a>
+                <a href="{% url 'citizens:edit' citizen.id %}" class="btn btn-warning btn-sm">Edit</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No citizens found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Подключаем скрипты и стили DataTables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#citizenTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "columnDefs": [
+                { "orderable": false, "targets": 5 } // Отключаем сортировку для колонки "Actions"
+            ]
+        });
+    });
+</script>
+{% endblock %}

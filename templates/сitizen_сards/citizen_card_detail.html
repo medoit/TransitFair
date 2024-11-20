@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}
+    Card Details for {{ card.citizen.first_name }} {{ card.citizen.last_name }}
+{% endblock %}
+
+{% block content %}
+    <h1>Card Details</h1>
+    
+    <p><strong>Citizen:</strong> {{ card.citizen.first_name }} {{ card.citizen.last_name }}</p>
+    <p><strong>Card ID:</strong> {{ card.id }}</p>
+    <p><strong>Hash PAN:</strong> {{ card.hash_pan }}</p>
+    <p><strong>Status:</strong> {{ card.active|yesno:"Active,Inactive" }}</p>
+    <p><strong>Activated At:</strong> {{ card.activated_at|date:"Y-m-d H:i" }}</p>
+    <p><strong>Deactivated At:</strong> {{ card.deactivated_at|date:"Y-m-d H:i" }}</p>
+
+    <a href="{% url 'citizen_card_list' %}" class="btn btn-secondary">Back to List</a>
+{% endblock %}

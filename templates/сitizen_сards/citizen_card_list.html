@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}
+    Citizen Cards List
+{% endblock %}
+
+{% block content %}
+    <h1>List of Citizen Cards</h1>
+    <a href="{% url 'citizen_card_create' %}" class="btn btn-primary">Create New Card</a>
+
+    {% if cards %}
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Card ID</th>
+                    <th>Citizen Name</th>
+                    <th>Status</th>
+                    <th>Activated At</th>
+                    <th>Deactivated At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for card in cards %}
+                    <tr>
+                        <td>{{ card.id }}</td>
+                        <td>{{ card.citizen.first_name }} {{ card.citizen.last_name }}</td>
+                        <td>{{ card.active|yesno:"Active,Inactive" }}</td>
+                        <td>{{ card.activated_at|date:"Y-m-d H:i" }}</td>
+                        <td>{{ card.deactivated_at|date:"Y-m-d H:i" }}</td>
+                        <td>
+                            <a href="{% url 'citizen_card_detail' card.id %}" class="btn btn-info">View</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No citizen cards found.</p>
+    {% endif %}
+{% endblock %}
